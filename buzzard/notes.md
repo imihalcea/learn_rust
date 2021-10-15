@@ -1,3 +1,5 @@
+##Associated functions and methods
+
 
 ```rust
 impl Server {
@@ -26,3 +28,19 @@ We do not expect to use the instance of the server outside of run method.
         - &self a reference
         - &mut self mutable reference
 
+##Strings
+    String :
+        - complex structure
+        - kind of a smart pointer
+        - heap allocation
+    &str : immutable slice of string
+        - similar to string view in C++
+        - Span in C# ?
+    string literal
+        - size known at compile time
+        - immutable
+        - is a string slice
+
+    All strings in rust are UTF8. 1 char is 1 to 4 bytes
+    Take care about &string[..3]
+        

@@ -21,6 +21,23 @@ impl Server {
     }
 
     fn run(self){
-        info!("Buzzard is running");
+        info!("Buzzard is running on {}:{}", self.address, self.port);
     }
+}
+
+enum Method{
+    GET,
+    POST,
+    PUT,
+    HEAD,
+    CONNECT,
+    OPTIONS,
+    TRACE,
+    PATCH
+}
+
+struct Request{
+    path:String,
+    query_string:Option<String>,
+    method:Method,
 }
