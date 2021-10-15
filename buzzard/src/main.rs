@@ -16,13 +16,11 @@ struct Server {
 }
 
 impl Server {
-
     fn new(address:String, port:u16) -> Self {
         Server{address, port}
     }
 
-    fn run(&self){
+    fn run(self){
         info!("Buzzard is running");
     }
-
 }
