@@ -73,4 +73,7 @@ We do not expect to use the instance of the server outside of run method.
 }
 ```
 
+##Type conversions
+    TryFrom trait in standard library, the compiler will generate the TryInto automaticaly
+
     

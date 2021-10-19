@@ -23,7 +23,7 @@
 #Demo
     * inspect the code of memory basics with gdb and see how stack and heap evolve
     * dgb ./path_exe
-    * list sources
+    * list
     * b [function_name] sets the breakpoint
     * r runs the program
     * bt n show n stacks of the frame
