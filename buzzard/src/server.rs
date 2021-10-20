@@ -1,7 +1,7 @@
-use std::io::Read;
 use log::{info, error, debug};
+use std::io::Read;
 use std::net::TcpListener;
-use crate::http::Request;
+use crate::http::{ParseError, Request};
 
 pub struct Server {
     address: String,
@@ -23,6 +23,12 @@ impl Server {
                     match  stream.read(&mut buffer) {
                         Ok(len) => {
                             debug!("Received {}",String::from_utf8_lossy(&buffer[0..len]));
+                            match Request::try_from(&buffer[0..len]) {
+                                Ok(req) =>{
+                                    dbg!(req);
+                                }
+                                Err(e) => error!("failed to parse request {}",e)
+                            }
                         }
                         Err(err) => {
                             error!("{}",err);

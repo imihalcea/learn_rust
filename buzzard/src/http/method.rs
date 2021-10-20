@@ -2,6 +2,7 @@ use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::str::FromStr;
 
+#[derive(Debug)]
 pub enum Method{
     GET,
     POST,
