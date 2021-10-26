@@ -1,9 +1,9 @@
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use log::{info, error, debug};
-use std::io::{Read, Error as IoError};
+use std::io::{Read, Write, Error as IoError};
 use std::net::TcpListener;
-use crate::http::{ParseError, Request};
+use crate::http::{ParseError, Request, Response, StatusCode};
 
 pub struct Server {
     address: String,
@@ -18,8 +18,8 @@ impl Server {
         let listener = TcpListener::bind(&self.address).unwrap();
         info!("Listening on: {}", self.address);
         loop{
-            let mut buffer:[u8;1024] = [0;1024];
-            match self.read_request(&listener, &mut buffer){
+
+            match self.handle_request(&listener){
                 Ok(req) => {
                     dbg!(&req);
                 }
@@ -31,13 +31,20 @@ impl Server {
         }
     }
 
-    fn read_request<'buf>(&self,listener:&TcpListener, buffer:&'buf mut [u8]) -> Result<Request<'buf>, ReadRequestError>{
+    fn handle_request(&self, listener:&TcpListener) -> Result<(), ReadRequestError>{
+        let mut buffer = [0;1024];
+
         let (mut stream, client_address) = listener.accept()?;
         debug!("Connected to: {}",client_address);
-        let bytes_read = stream.read(buffer)?;
+
+        let bytes_read = stream.read(&mut buffer)?;
         debug!("Received {}",String::from_utf8_lossy(&buffer[0..bytes_read]));
+
         let req = Request::try_from(&buffer[0..bytes_read])?;
-        Ok(req)
+        dbg!(&req);
+        let response = Response::new(StatusCode::NotFound, Some("<h1>Hello Buzz!</h1>".to_string()));
+        response.send(&mut stream);
+        Ok(())
     }
 }
 
