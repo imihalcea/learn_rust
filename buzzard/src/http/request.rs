@@ -10,6 +10,20 @@ pub struct Request<'buf>{
     method:Method,
 }
 
+impl<'buf> Request<'buf>{
+    pub fn path(&self)->&str{
+        &self.path
+    }
+
+    pub fn method(&self) -> &Method{
+        &self.method
+    }
+
+    pub fn query_string(&self) -> Option<&QueryString>{
+        self.query_string.as_ref()
+    }
+}
+
 pub enum ParseError{
     InvalidRequest,
     InvalidEncoding,
@@ -82,8 +96,6 @@ impl<'buf> TryFrom<&'buf [u8]> for Request<'buf>{
             method
         })
     }
-
-
 }
 
 fn get_next_word(req:&str) -> Option<(&str,&str)>{

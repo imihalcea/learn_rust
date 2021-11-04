@@ -76,4 +76,22 @@ We do not expect to use the instance of the server outside of run method.
 ##Type conversions
     TryFrom trait in standard library, the compiler will generate the TryInto automaticaly
 
-    
+
+##Traits as parameters
+```rust
+pub fn send(&self, stream : &mut impl Write) -> IoResult<()> {
+    //impl keyword => Static dispatch monomorphisation
+    //the compiler creates n copies of send function with the concrete impl of the write trait
+    //scans the code and sees that send function is used with TCPStream and File, it will create
+    //2 send functions
+}
+
+
+pub fn send(&self, stream : &mut dyn Write) -> IoResult<()> {
+    //dyn keyword => dynamic dispatch
+    //mapping with a vtable
+}
+
+
+```
+pub fn send(&self, stream : &mut impl Write) -> IoResult<()>{
