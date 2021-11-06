@@ -15,7 +15,7 @@ impl ProductController {
     pub fn new()->Self{
         return Self{}
     }
-    pub fn get_all(&self, _ : HashMap<String, String>) -> Result<String, String>{
+    pub fn get_all(&self, _ : &HashMap<String, String>) -> Result<String, String>{
         let products = [
             Product{
                 id:uuid::Uuid::new_v4(),
