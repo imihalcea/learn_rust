@@ -1,13 +1,12 @@
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
-use std::io::{Error as IoError, Read, Write};
+use std::io::{Error as IoError, Read};
 use std::net::TcpListener;
 
 use log::{debug, error, info};
 
 use crate::handler::Handler;
-use crate::http::{ParseError, Request, Response, StatusCode};
-use crate::router::Router;
+use crate::http::{ParseError, Request, Response};
 
 pub struct Server {
     address: String,

@@ -1,17 +1,17 @@
 use std::convert::TryFrom;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
-use crate::http::{method::MethodError, method::Method, QueryString};
+use crate::http::{method::MethodError, method::Method, QueryString, Path};
 
 #[derive(Debug)]
 pub struct Request<'buf>{
-    path:&'buf str,
+    path:Path<'buf>,
     query_string:Option<QueryString<'buf>>,
     method:Method,
 }
 
 impl<'buf> Request<'buf>{
-    pub fn path(&self)->&str{
+    pub fn path(&self)->&Path{
         &self.path
     }
 
@@ -91,7 +91,7 @@ impl<'buf> TryFrom<&'buf [u8]> for Request<'buf>{
             path = &path[..i];
         }
         Ok(Self{
-            path,
+            path:Path::from(path),
             query_string,
             method
         })

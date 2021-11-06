@@ -3,7 +3,6 @@
 
 use env_logger::{Builder, Target};
 
-use app::controllers::*;
 use server::Server;
 use router::Router;
 
