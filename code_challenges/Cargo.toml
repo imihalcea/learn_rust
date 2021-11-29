@@ -1,2 +1,0 @@
-[workspace]
-members = ["two_sum", "check_duplicates"]
